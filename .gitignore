@@ -1,0 +1,11 @@
+# Build outputs and local files
+**/StreamingAssets/Scripts/*.dll
+dist/
+*.pdb
+*.mdb
+*.log
+*.bak
+.vs/
+.vscode/
+.DS_Store
+Thumbs.db

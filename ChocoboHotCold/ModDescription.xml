@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mod>
+  <Name>Chocobo Hot &amp; Cold Radar</Name>
+  <Version>1.0</Version>
+  <InstallationPath>ChocoboHotCold</InstallationPath>
+  <ReleaseDate>2026-10-22</ReleaseDate>
+  <ReleaseDateOriginal>2026-10-22</ReleaseDateOriginal>
+  <Author>JustPeace</Author>
+  <Description>Shows the current dig point of the Chocobo Hot &amp; Cold mini-game in real time.
+
+- A pulsing beacon and ground ring mark the exact treasure spot in Chocobo's Forest, the Lagoon and the Air Garden
+- A HUD compass points towards the treasure relative to the camera, with the distance in metres
+- An edge arrow appears when the treasure is outside the camera view
+- The mini-game's own "Kweh" proximity level (1-5) is displayed as five dots and drives the marker colour
+- Optional overlay of all nine candidate dig points for debugging
+
+All values are read from the game's own event variables; no save data or game files are modified.
+
+Configuration is in ChocoboHotCold/ChocoboHotCold.ini.</Description>
+  <PatchNotes>Version 1.0: first release.</PatchNotes>
+  <Category>Gameplay</Category>
+  <Website>
+  </Website>
+  <MinimumMemoriaVersion>2025-07-13</MinimumMemoriaVersion>
+</Mod>
