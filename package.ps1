@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 [xml]$metadata = Get-Content (Get-ChildItem "$PSScriptRoot/*/ModDescription.xml").FullName -Raw
 $mod = [string]$metadata.Mod.InstallationPath
 $version = [string]$metadata.Mod.Version
-foreach ($document in @('README.md','README.zh-CN.md','LICENSE','RELEASE-CHECKLIST.md')) {
+foreach ($document in @('README.md','README.zh-CN.md','LICENSE','RELEASE-CHECKLIST.md','VALIDATION.md')) {
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot $document) -Destination (Join-Path $PSScriptRoot "$mod/$document") -Force
 }
 $dist = Join-Path $PSScriptRoot 'dist'

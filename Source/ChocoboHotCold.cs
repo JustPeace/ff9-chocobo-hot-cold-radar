@@ -45,14 +45,11 @@ namespace ChocoboHotCold
     }
 
     [ChocoboHotColdBootstrap]
-    public sealed class ChocoboHotColdBootstrap : IOverloadOnBattleInitScript
+    public sealed class ChocoboHotColdBootstrap
     {
-        // Fallback: if the pump above could not be installed for some reason,
-        // the overlay is at least created when a battle starts.
-        public void OnBattleInit()
-        {
-            ChocoboHotColdOverlay.Ensure();
-        }
+        // ScriptsLoader processes custom attributes on every type, including
+        // this marker. The attribute installs the existing main-thread pump;
+        // do not claim the exclusive battle-init hook used by battle mods.
     }
 
     // ------------------------------------------------------------------
@@ -225,7 +222,7 @@ namespace ChocoboHotCold
             UnityEngine.Object.DontDestroyOnLoad(go);
             s_instance = go.AddComponent<ChocoboHotColdOverlay>();
 
-            Log.Message("[ChocoboHotCold] Version 1.0 ready. WorldMarker={0}, Compass={1}, UnitsPerMeter={2}.",
+            Log.Message("[ChocoboHotCold] Version 1.0.1 ready. WorldMarker={0}, Compass={1}, UnitsPerMeter={2}.",
                 s_showWorldMarker, s_showCompass, s_unitsPerMeter);
         }
 

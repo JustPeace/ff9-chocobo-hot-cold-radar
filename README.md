@@ -1,4 +1,4 @@
-# Chocobo Hot & Cold Radar 1.0
+# Chocobo Hot & Cold Radar 1.0.1
 
 English | [简体中文](README.zh-CN.md)
 
@@ -27,18 +27,18 @@ The original event scripts create nine hidden dig objects with UIDs 128–136 in
 
 The mod reads event data and draws an overlay; it does not intentionally write save data. Large mods that change these fields, variables or objects require separate compatibility testing. Distance is a configurable conversion, not a measured real-world scale.
 
-Check `Memoria.log` for `[ChocoboHotCold] Main-thread pump installed`, `Version 1.0 ready`, `Dig field` and `Target` messages. Startup messages alone do not prove that treasure detection works.
+Check `Memoria.log` for `[ChocoboHotCold] Main-thread pump installed`, `Version 1.0.1 ready`, `Dig field` and `Target` messages. Startup messages alone do not prove that treasure detection works.
 
 ## Requirements and validation status
 
 - Windows Steam edition of FINAL FANTASY IX with [Memoria v2025.07.04, including the 2025-07-13 hotfix](https://github.com/Albeoris/Memoria/releases/tag/v2025.07.04).
 - Memoria 2025-07-13 is the current compilation and compatibility baseline. Earlier versions and Canary have not been verified.
-- Source compilation and package structure checks have passed. These release candidates have **not yet completed in-game regression testing**. See [the release checklist](RELEASE-CHECKLIST.md), currently written in Chinese.
+- Source compilation, package checks and both load-order checks against the installed engine resolver have passed. The author reports that the previously installed version works in-game. **The 1.0.1 patch has not received a separate in-game regression pass**. See [the release checklist](RELEASE-CHECKLIST.md), currently written in Chinese.
 - Game files, Memoria binaries, translations, Moguri assets and save files are not included. Build references must come from your own game installation.
 
 ## Installation
 
-1. Download `ChocoboHotCold-v1.0.zip` from Releases and close the game.
+1. Download `ChocoboHotCold-v1.0.1.zip` from Releases and close the game.
 2. Extract it into the game directory containing `FF9_Launcher.exe`. The resulting path must be `ChocoboHotCold/StreamingAssets/Scripts/Memoria.Scripts.ChocoboHotCold.dll` without an extra nested mod folder.
 3. Enable the mod in the Memoria launcher's Mods tab and restart the game.
 4. If it is not listed, append `"ChocoboHotCold"` to the existing `FolderNames` and `Priorities` lists in the `[Mod]` section of `Memoria.ini`. Preserve the other entries and their order.
@@ -53,7 +53,7 @@ Close the game, disable this mod in the launcher or remove its name from `Folder
 
 FloatingHPBar and BattleInfoOverlay have cooperative initialisation logic. BattleInfoOverlay alone may appear only after the first battle action resolves.
 
-FloatingHPBar and ChocoboHotCold both implement `IOverloadOnBattleInitScript`. The current engine retains a single implementation, so one mod can override the other's hook. Running all four mods together and their loading order still require in-game verification. If health bars are missing, test FloatingHPBar on its own first.
+Since radar 1.0.1, ChocoboHotCold no longer implements `IOverloadOnBattleInitScript`. It retains its existing attribute-based startup and camera/log callbacks. Automated checks against the installed Memoria 2025-07-13 resolver confirm that FloatingHPBar keeps its battle-init hook in either ordering. Radar 1.0 could claim that hook when placed above FloatingHPBar.
 
 BattleInfoOverlay has Chinese interface labels, and NeroNames uses fixed Chinese names. Other text depends on the game and installed translation. Compatibility with large gameplay overhauls is not guaranteed.
 
@@ -75,6 +75,16 @@ bash build.sh '/path/to/FINAL FANTASY IX'
 ```
 
 Source: `Source/ChocoboHotCold.cs`. Packages and SHA-256 checksums: `dist/`. Generated DLLs and `dist/` are ignored by Git; upload the ZIP separately as a Release attachment. Packaging refuses to overwrite an existing ZIP; rename or remove that ZIP before rebuilding a package.
+
+## Startup compatibility check
+
+On Windows with .NET Framework 4.x and FloatingHPBar installed, run:
+
+```powershell
+./tools/verify-hooks.ps1 -GamePath 'D:/Games/FINAL FANTASY IX'
+```
+
+This check invokes the real installed engine resolver for both mod orders and each mod alone. It inspects the startup attribute without executing Unity callbacks, and does not launch the game or modify saves. It does not test scene rendering.
 
 ## Reporting problems
 

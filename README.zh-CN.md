@@ -1,4 +1,4 @@
-# Chocobo Hot & Cold Radar 1.0
+# Chocobo Hot & Cold Radar 1.0.1
 
 为陆行鸟挖宝显示宝藏位置、方位和距离。
 
@@ -9,13 +9,13 @@
 
 - Windows Steam 版 FINAL FANTASY IX，已安装 [Memoria](https://github.com/Albeoris/Memoria/releases/tag/v2025.07.04) 的 2025-07-13 热修版本。
 - 2025-07-13 是本次发布准备使用的编译与兼容基准；更早版本和 Canary 未验证。
-- 本次完成源码编译和压缩包检查，尚未完成发布候选包的游戏内回归。详见 [发布检查清单](RELEASE-CHECKLIST.md)。
+- 1.0.1 已通过源码编译、包内容及本地引擎两种加载顺序验证。作者反馈原安装版本实机正常；1.0.1 尚未单独进行游戏内回归。详见 [发布检查清单](RELEASE-CHECKLIST.md)。
 - 不包含游戏、Memoria、汉化或 Moguri 的 DLL、素材和存档。游戏引用需从自己的安装目录读取。
 
 
 ## 安装
 
-1. 从 Releases 下载 `ChocoboHotCold-v1.0.zip` 并退出游戏。
+1. 从 Releases 下载 `ChocoboHotCold-v1.0.1.zip` 并退出游戏。
 2. 解压到游戏根目录（有 `FF9_Launcher.exe` 的目录），确认形成 `ChocoboHotCold/StreamingAssets/Scripts/Memoria.Scripts.ChocoboHotCold.dll`，不要套两层文件夹。
 3. 在 Memoria 启动器的 Mods 页面启用本 mod，然后重启游戏。
 4. 如果启动器未列出它，在 `Memoria.ini` 的 `[Mod]` 中，将 `"ChocoboHotCold"` 追加到现有 `FolderNames` 和 `Priorities` 列表。保留其他 mod 的名称与顺序，不要用示例覆盖整行。
@@ -63,7 +63,7 @@
 如果游戏里没有出现标记，请看 `Memoria.log`，搜索 `ChocoboHotCold`：
 
 - `Main-thread pump installed.` — 启动钩子成功
-- `Version 1.0 ready.` — 覆盖层创建成功
+- `Version 1.0.1 ready.` — 覆盖层创建成功
 - `Dig field 2950 detected (mapVar[37]=N).` — 成功识别场地与宝藏索引
 - `Target #N at (x, z), distance D.` — 成功定位
 
@@ -74,7 +74,7 @@
 ## 组合使用与语言
 
 - FloatingHPBar 与 BattleInfoOverlay 有协作初始化逻辑。单独使用 BattleInfoOverlay 时，浮窗可能要等第一次战斗指令结算后才出现。
-- FloatingHPBar 和 ChocoboHotCold 均实现了 `IOverloadOnBattleInitScript`。在当前引擎只保留一个实现的机制下，存在启动钩子覆盖风险；四个 mod 同开尚需游戏内验证。遇到血条不出现时，先只启用 FloatingHPBar 排查。
+- 从雷达 1.0.1 起，ChocoboHotCold 不再实现 `IOverloadOnBattleInitScript`，保留原有属性启动及相机、日志回调路径。已直接调用本地 Memoria 2025-07-13 的钩子选择方法，验证两种排序下血条均保留其战斗启动钩子。旧版雷达 1.0 排在血条前面时可能抢占该钩子。
 - BattleInfoOverlay 的界面含固定中文；NeroNames 的名字固定为中文。其他文本取决于游戏及汉化环境。
 - 不承诺与所有大型改版兼容。反馈时请附 Memoria 版本、启用顺序、复现步骤与相关日志，并先移除个人路径信息。
 
@@ -98,6 +98,16 @@ bash build.sh '/path/to/FINAL FANTASY IX'
 
 源码位于 `Source/ChocoboHotCold.cs`，编译产物位于 `ChocoboHotCold/StreamingAssets/Scripts/`，压缩包输出到 `dist/`。DLL 和 dist 默认不纳入 Git，成品单独上传 Releases。直接下载 GitHub 的 Source code ZIP 需要自行编译。
 
+
+## 启动兼容性验证
+
+Windows 安装 .NET Framework 4.x 和 FloatingHPBar 后，可运行：
+
+```powershell
+./tools/verify-hooks.ps1 -GamePath 'D:/Games/FINAL FANTASY IX'
+```
+
+该检查使用本地引擎的实际钩子选择方法，验证两种排序及单独启用。检查只读取启动属性元数据，不执行 Unity 回调、不启动游戏、不修改存档；不覆盖场景绘制测试。
 
 ## 作者与许可
 

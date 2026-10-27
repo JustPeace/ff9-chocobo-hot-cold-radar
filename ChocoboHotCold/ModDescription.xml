@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mod>
   <Name>Chocobo Hot &amp; Cold Radar</Name>
-  <Version>1.0</Version>
+  <Version>1.0.1</Version>
   <InstallationPath>ChocoboHotCold</InstallationPath>
-  <ReleaseDate>2026-10-22</ReleaseDate>
+  <ReleaseDate>2026-10-27</ReleaseDate>
   <ReleaseDateOriginal>2026-10-22</ReleaseDateOriginal>
   <Author>JustPeace</Author>
   <Description>Shows the current dig point of the Chocobo Hot &amp; Cold mini-game in real time.
@@ -17,9 +17,9 @@
 All values are read from the game's own event variables; no save data or game files are modified.
 
 Configuration is in ChocoboHotCold/ChocoboHotCold.ini.</Description>
-  <PatchNotes>Version 1.0: first release.</PatchNotes>
+  <PatchNotes>Version 1.0.1: remove the redundant battle-init fallback so the radar no longer competes with FloatingHPBar for the exclusive hook. Independent startup and treasure rendering are retained.
+Version 1.0: first release.</PatchNotes>
   <Category>Gameplay</Category>
-  <Website>
-  </Website>
+  <Website>https://github.com/JustPeace/ff9-chocobo-hot-cold-radar</Website>
   <MinimumMemoriaVersion>2025-07-13</MinimumMemoriaVersion>
 </Mod>
